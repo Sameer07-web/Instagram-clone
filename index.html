@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Instagram - Clone Desktop UI</title>
-    <!-- Correct Poppins font import -->
+    <title>Instagram Clone</title>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
@@ -121,7 +121,7 @@
       .stories-bar {
         height: 112px;
         display: flex;
-        gap: 26px;
+        gap: 20px;
         overflow-x: auto;
         margin-bottom: 30px;
         padding-left: 8px;
@@ -138,7 +138,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 85px;
+        width: 78px;
         flex-shrink: 0;
         cursor: pointer;
         user-select: none;
@@ -153,7 +153,7 @@
         height: 76px;
         border-radius: 50%;
         padding: 2px;
-        border: 2px solid rgb(199, 103, 103); /* thinner white border for story */
+        border: 2px solid rgb(199, 103, 103);
         box-sizing: border-box;
         transition: transform 0.3s ease;
       }
@@ -245,7 +245,7 @@
       }
       .post-actions .left-icons span {
         font-size: 14px;
-        margin-right: 10px; /* reduced from 18px to 10px */
+        margin-right: 10px;
         margin-left: 3px;
         color: #ccc;
       }
@@ -603,9 +603,71 @@
                 Oh wait, we did. 😎
               </div>
               <div class="comments" tabindex="0">View all comments</div>
-              <div class="post-timestamp">June 4</div>
+              <div class="post-timestamp">Add a comment...</div>
             </article>
-            <!-- More posts here -->
+          </section>
+          <section class="feed" aria-label="Post Feed">
+            <article class="post" aria-label="Post by virat.kohli">
+              <header class="post-header">
+                <img class="avatar" src="vk_pfp.png" alt="RCB profile" />
+                <div class="username">virat.kohli</div>
+                <div
+                  class="more"
+                  tabindex="0"
+                  role="button"
+                  aria-label="More options"
+                >
+                  <i class="fas fa-ellipsis-h"></i>
+                </div>
+              </header>
+              <img
+                class="post-image"
+                src="vk.png"
+                alt="virat kohli's test retirement"
+              />
+              <div class="post-actions">
+                <div class="left-icons" role="group" aria-label="Post actions">
+                  <i class="far fa-heart"></i><span></span>
+                  <i class="far fa-comment"></i><span></span>
+                  <i class="far fa-paper-plane"></i><span></span>
+                </div>
+                <div
+                  class="bookmark"
+                  tabindex="0"
+                  role="button"
+                  aria-label="Save post"
+                >
+                  <i class="far fa-bookmark"></i>
+                </div>
+              </div>
+              <div class="likes" aria-live="polite">
+                20,143,412 likes
+              </div>
+              <div class="caption">
+                <strong>virat.kohli</strong> It's been 14 years since I first
+                wore the baggy blue in Test cricket. Honestly, I never imagined
+                the journey this format would take me on. It's tested me, shaped
+                me, and taught me lessons I'll carry for life. <br />
+                <br />
+                There's something deeply personal about playing in whites. The
+                quiet grind, the long days, the small moments that no one sees
+                but that stay with you forever. <br />
+                <br />As I step away from this format, it's not easy — but it
+                feels right. I've given it everything I had, and it's given me
+                back so much more than I could've hoped for. <br />
+                <br />
+                I'm walking away with a heart full of gratitude — for the game,
+                for the people I shared the field with, and for every single
+                person who made me feel seen along the way. <br />
+                <br />
+                I'll always look back at my Test career with a smile. <br />
+                <br />
+                #269, signing off. <br />
+                🇮🇳❤️  <br>15w
+              </div>
+              <div class="comments" tabindex="0">View all comments</div>
+              <div class="post-timestamp">Add a comment...</div>
+            </article>
           </section>
           <section class="feed" aria-label="Post Feed">
             <article
@@ -651,7 +713,6 @@
               <div class="comments" tabindex="0">View all comments</div>
               <div class="post-timestamp">June 4</div>
             </article>
-            <!-- More posts here -->
           </section>
           <section class="feed" aria-label="Post Feed">
             <article
@@ -697,7 +758,6 @@
               <div class="comments" tabindex="0">View all comments</div>
               <div class="post-timestamp">June 4</div>
             </article>
-            <!-- More posts here -->
           </section>
           <section class="feed" aria-label="Post Feed">
             <article
@@ -743,53 +803,6 @@
               <div class="comments" tabindex="0">View all comments</div>
               <div class="post-timestamp">June 4</div>
             </article>
-            <!-- More posts here -->
-          </section>
-          <section class="feed" aria-label="Post Feed">
-            <article
-              class="post"
-              aria-label="Post by royalchallengers.bengaluru"
-            >
-              <header class="post-header">
-                <img class="avatar" src="rcb_pfp.png" alt="RCB profile" />
-                <div class="username">royalchallengers.bengaluru</div>
-                <div
-                  class="more"
-                  tabindex="0"
-                  role="button"
-                  aria-label="More options"
-                >
-                  <i class="fas fa-ellipsis-h"></i>
-                </div>
-              </header>
-              <img class="post-image" src="rcb.png" alt="RCB wins IPL 2025" />
-              <div class="post-actions">
-                <div class="left-icons" role="group" aria-label="Post actions">
-                  <i class="far fa-heart"></i><span>2.2M</span>
-                  <i class="far fa-comment"></i><span>6,845</span>
-                  <i class="far fa-paper-plane"></i><span>78.5K</span>
-                </div>
-                <div
-                  class="bookmark"
-                  tabindex="0"
-                  role="button"
-                  aria-label="Save post"
-                >
-                  <i class="far fa-bookmark"></i>
-                </div>
-              </div>
-              <div class="likes" aria-live="polite">
-                Liked by virat.kohli and others
-              </div>
-              <div class="caption">
-                <strong>royalchallengers.bengaluru</strong> wHy iS rCb
-                cELebRaTiNg liKe tHey wOn tHe iP… <br /><br />
-                Oh wait, we did. 😎
-              </div>
-              <div class="comments" tabindex="0">View all comments</div>
-              <div class="post-timestamp">June 4</div>
-            </article>
-            <!-- More posts here -->
           </section>
         </main>
       </main>
