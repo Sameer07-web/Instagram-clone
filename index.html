@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Instagram - Clone Desktop UI</title>
+    <!-- Correct Poppins font import -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body,
+      html {
+        height: 100%;
+        font-family: "Poppins", Arial, Helvetica, sans-serif;
+        background: #121212;
+        color: #fff;
+      }
+
+      /* Left Sidebar */
+      nav.sidebar-left {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 245px;
+        height: 100vh;
+        background: #000;
+        border-right: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 28px 0 24px 20px;
+        z-index: 100;
+      }
+      nav.sidebar-left .insta {
+        margin-bottom: 18px;
+        padding-left: 10px;
+      }
+      nav.sidebar-left .Instanamee {
+        width: 120px;
+      }
+      nav.sidebar-left ul.nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+      nav.sidebar-left ul.nav-links li {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-weight: 600;
+        font-size: 19px;
+        color: #e8e8e8;
+        cursor: pointer;
+        border-radius: 8px;
+        padding: 7px 12px;
+        transition: background 0.15s, color 0.15s;
+      }
+      nav.sidebar-left ul.nav-links li:hover,
+      nav.sidebar-left ul.nav-links li.active {
+        background: black;
+        color: #fff;
+      }
+      nav.sidebar-left ul.nav-links li i {
+        font-size: 26px;
+        min-width: 30px;
+        text-align: center;
+      }
+      nav.sidebar-left ul.bottom-links {
+        color: #666;
+        font-size: 14px;
+        font-weight: 400;
+        padding-left: 2px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 28px;
+      }
+      nav.sidebar-left ul.bottom-links li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        border-radius: 8px;
+        padding: 6px 0px;
+        transition: background 0.14s, color 0.14s;
+      }
+      nav.sidebar-left ul.bottom-links li:hover {
+        color: #999;
+      }
+      nav.sidebar-left ul.bottom-links li i {
+        font-size: 20px;
+        min-width: 28px;
+        text-align: center;
+      }
+
+      main.main-content-wrapper {
+        margin-left: 245px;
+        margin-right: 325px;
+        background: black;
+        min-height: 100vh;
+      }
+      main.main-content {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 36px 48px 30px 10px;
+        display: flex;
+        flex-direction: column;
+      }
+      /* Stories Bar */
+      .stories-bar {
+        height: 112px;
+        display: flex;
+        gap: 26px;
+        overflow-x: auto;
+        margin-bottom: 30px;
+        padding-left: 8px;
+        max-width: 580px;
+        margin-left: auto;
+        margin-right: auto;
+        flex-shrink: 0;
+        scrollbar-width: none;
+      }
+      .stories-bar::-webkit-scrollbar {
+        display: none;
+      }
+      .story {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 85px;
+        flex-shrink: 0;
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.16s;
+      }
+      .story:hover {
+        background: rgba(255, 255, 255, 0.07);
+        border-radius: 15px;
+      }
+      .story img {
+        width: 76px;
+        height: 76px;
+        border-radius: 50%;
+        padding: 2px;
+        border: 2px solid rgb(199, 103, 103); /* thinner white border for story */
+        box-sizing: border-box;
+        transition: transform 0.3s ease;
+      }
+      .story:hover img {
+        transform: scale(1.12);
+      }
+      .story span {
+        margin-top: 7px;
+        font-size: 13.5px;
+        max-width: 78px;
+        color: #ccc;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.2;
+        text-align: center;
+      }
+
+      /* Feed / Posts */
+      .feed {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      article.post {
+        background: black;
+        width: 468px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.42);
+        border: 1px solid black;
+        margin-bottom: 36px;
+        display: flex;
+        flex-direction: column;
+        user-select: none;
+      }
+      .post-header {
+        padding: 18px 20px 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .post-header img.avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 3px solid #e8e8e8;
+        object-fit: cover;
+      }
+      .post-header .username {
+        font-weight: 700;
+        font-size: 16px;
+        color: #fff;
+        flex-grow: 1;
+      }
+      .post-header .more {
+        font-size: 20px;
+        color: #888;
+        cursor: pointer;
+        transition: color 0.14s;
+      }
+      .post-header .more:hover {
+        color: #ddd;
+      }
+      .post-image {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        background: black;
+        border-radius: 3px;
+      }
+      .post-actions {
+        padding: 14px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .post-actions .left-icons {
+        display: flex;
+        align-items: center;
+        gap: 2px; /* decreased from 14px to 8px */
+        font-size: 24px;
+        color: #ddd;
+        cursor: pointer;
+      }
+
+      .post-actions .left-icons i {
+        font-size: 26px;
+        margin-right: 2px;
+      }
+      .post-actions .left-icons span {
+        font-size: 14px;
+        margin-right: 10px; /* reduced from 18px to 10px */
+        margin-left: 3px;
+        color: #ccc;
+      }
+
+      .post-actions .bookmark {
+        font-size: 26px;
+        color: #ddd;
+        cursor: pointer;
+        padding-left: 6px;
+        transition: color 0.14s;
+      }
+      .post-actions .bookmark:hover {
+        color: #ed4956;
+      }
+      .likes {
+        padding: 0 24px 8px;
+        font-weight: 700;
+        font-size: 15px;
+        color: #fff;
+      }
+      .caption {
+        padding: 0 24px 20px;
+        font-size: 15px;
+        color: #ddd;
+        line-height: 1.4;
+        word-break: break-word;
+      }
+      .caption strong {
+        color: #fff;
+      }
+      .comments {
+        padding: 0 24px 18px;
+        font-size: 13.5px;
+        color: #bbb;
+        cursor: pointer;
+        transition: color 0.14s;
+      }
+      .comments:hover {
+        text-decoration: underline;
+        color: #eee;
+      }
+      .post-timestamp {
+        padding: 0 24px 18px;
+        font-size: 11px;
+        text-transform: uppercase;
+        color: #666;
+      }
+
+      /* Right Sidebar */
+      aside.sidebar-right {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 325px;
+        height: 100vh;
+        background: #000;
+        overflow-y: auto;
+        border-left: 1px solid #222;
+        display: flex;
+        flex-direction: column;
+        z-index: 90;
+      }
+      .profile-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 26px;
+        margin-top: 38px;
+        padding-left: 14px;
+      }
+      .profile-top img {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .profile-info .username {
+        font-weight: 700;
+        font-size: 16px;
+      }
+      .profile-info .fullname {
+        font-size: 13.5px;
+        color: #8e8e8e;
+        margin-top: 4px;
+      }
+      .profile-switch {
+        margin-left: auto;
+        cursor: pointer;
+        color: #0095f6;
+        font-weight: 600;
+        font-size: 13px;
+        transition: color 0.14s;
+      }
+      .profile-switch:hover {
+        color: #34d8d8;
+        text-decoration: underline;
+      }
+      .suggestions-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        color: #aaa;
+        padding-left: 14px;
+        padding-right: 6px;
+      }
+      .suggestions-header a {
+        color: #555;
+        font-weight: normal;
+        font-size: 13px;
+        text-decoration: none;
+        transition: color 0.14s;
+      }
+      .suggestions-header a:hover {
+        text-decoration: underline;
+        color: #999;
+      }
+      .suggestion {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+      .suggestion-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .suggestion-left img {
+        width: 41px;
+        height: 41px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1.5px solid #eee;
+      }
+      .suggestion-info .username {
+        font-weight: 600;
+        font-size: 14px;
+        color: #fff;
+      }
+      .suggestion-info .reason {
+        font-size: 12px;
+        color: #8e8e8e;
+        margin-top: 1px;
+      }
+      .follow-btn {
+        background: none;
+        border: none;
+        color: #0095f6;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 0 10px;
+        transition: background 0.13s;
+      }
+      .follow-btn:hover {
+        text-decoration: underline;
+        background: #212dbd2e;
+      }
+
+      footer.footer {
+        font-size: 12px;
+        color: #888;
+        background: transparent;
+        border-top: 1px solid #222;
+        user-select: none;
+        padding: 14px 10px 24px 10px;
+        text-align: center;
+        margin-top: 12px; /* less margin */
+      }
+      footer.footer nav {
+        margin-bottom: 12px;
+        word-spacing: 5px;
+      }
+      footer.footer nav a {
+        color: #a8a8a8;
+        margin: 0 4px;
+        text-decoration: none;
+        font-size: 11px;
+        transition: color 0.14s;
+      }
+      footer.footer nav a:hover {
+        text-decoration: underline;
+        color: #bababa;
+      }
+      @media screen and (max-width: 1300px) {
+        main.main-content-wrapper {
+          margin-right: 0;
+        }
+        aside.sidebar-right {
+          display: none;
+        }
+      }
+      @media screen and (max-width: 920px) {
+        nav.sidebar-left {
+          width: 70px;
+          padding-left: 0;
+          padding-right: 0;
+        }
+        main.main-content-wrapper {
+          margin-left: 70px;
+          padding-left: 0px;
+        }
+        article.post {
+          width: 100vw;
+          min-width: 99vw;
+          border-radius: 0;
+          margin: 0;
+        }
+        .stories-bar {
+          max-width: 98vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <!-- Left Sidebar -->
+      <nav class="sidebar-left" aria-label="Primary Navigation">
+        <div class="insta">
+          <img src="insta.png" alt="Instagram Logo" class="Instanamee" />
+        </div>
+        <ul class="nav-links" role="list">
+          <li tabindex="0"><i class="fas fa-home"></i><span>Home</span></li>
+          <li tabindex="0"><i class="fas fa-search"></i><span>Search</span></li>
+          <li tabindex="0">
+            <i class="far fa-compass"></i><span>Explore</span>
+          </li>
+          <li tabindex="0">
+            <i class="fab fa-instagram"></i><span>Reels</span>
+          </li>
+          <li tabindex="0">
+            <i class="far fa-heart"></i><span>Notifications</span>
+          </li>
+          <li tabindex="0">
+            <i class="fas fa-plus-square"></i><span>Create</span>
+          </li>
+          <li tabindex="0">
+            <i class="far fa-user-circle"></i><span>Profile</span>
+          </li>
+        </ul>
+        <ul class="bottom-links" role="list" aria-label="More options">
+          <li tabindex="0"><i class="fas fa-bars"></i><span>More</span></li>
+          <li tabindex="0">
+            <i class="fas fa-th-large"></i><span>Also from Meta</span>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content-wrapper" role="main">
+        <main class="main-content" tabindex="0">
+          <!-- Stories Bar -->
+          <div class="stories-bar" aria-label="User stories">
+            <div class="story" tabindex="0">
+              <img src="arijith.png" alt="smrrpfp" />
+              <span>smrrr_18</span>
+            </div>
+            <div class="story" tabindex="0">
+              <img src="vk_pfp.png" alt="viratkohli" />
+              <span>virat.kohli</span>
+            </div>
+            <div class="story" tabindex="0">
+              <img src="snist-tribe.png" alt="snist_tribe" />
+              <span>sreenidhi_tribe</span>
+            </div>
+            <div class="story" tabindex="0">
+              <img src="ezsnippet.png" alt="ezsnippet" />
+              <span>ezsnippet</span>
+            </div>
+            <div class="story" tabindex="0">
+              <img src="navingolden.png" alt="nawingoldenboy" />
+              <span>nawingoldenboy</span>
+            </div>
+            <div class="story" tabindex="0">
+              <img src="rcb_pfp.png" alt="rcb profile" />
+              <span>royalchallengers.bengaluru</span>
+            </div>
+            <div class="story" tabindex="0">
+              <img src="nobg.png" alt="magnusjay" />
+              <span>magnusjay</span>
+            </div>
+            <div class="story" tabindex="0">
+              <img
+                src="https://randomuser.me/api/portraits/men/18.jpg"
+                alt="magnusjay"
+              />
+              <span>magnusjay...</span>
+            </div>
+            <div class="story" tabindex="0">
+              <img
+                src="https://randomuser.me/api/portraits/men/18.jpg"
+                alt="magnusjay"
+              />
+              <span>magnusjay...</span>
+            </div>
+            <div class="story" tabindex="0">
+              <img
+                src="https://randomuser.me/api/portraits/men/18.jpg"
+                alt="magnusjay"
+              />
+              <span>magnusjay...</span>
+            </div>
+            <div class="story" tabindex="0">
+              <img
+                src="https://randomuser.me/api/portraits/men/18.jpg"
+                alt="magnusjay"
+              />
+              <span>magnusjay...</span>
+            </div>
+          </div>
+          <!-- Feed Section -->
+          <section class="feed" aria-label="Post Feed">
+            <article
+              class="post"
+              aria-label="Post by royalchallengers.bengaluru"
+            >
+              <header class="post-header">
+                <img class="avatar" src="rcb_pfp.png" alt="RCB profile" />
+                <div class="username">royalchallengers.bengaluru</div>
+                <div
+                  class="more"
+                  tabindex="0"
+                  role="button"
+                  aria-label="More options"
+                >
+                  <i class="fas fa-ellipsis-h"></i>
+                </div>
+              </header>
+              <img class="post-image" src="rcb.png" alt="RCB wins IPL 2025" />
+              <div class="post-actions">
+                <div class="left-icons" role="group" aria-label="Post actions">
+                  <i class="far fa-heart"></i><span></span>
+                  <i class="far fa-comment"></i><span></span>
+                  <i class="far fa-paper-plane"></i><span></span>
+                </div>
+                <div
+                  class="bookmark"
+                  tabindex="0"
+                  role="button"
+                  aria-label="Save post"
+                >
+                  <i class="far fa-bookmark"></i>
+                </div>
+              </div>
+              <div class="likes" aria-live="polite">2,254,218 likes</div>
+              <div class="caption">
+                <strong>royalchallengers.bengaluru</strong> wHy iS rCb
+                cELebRaTiNg liKe tHey wOn tHe iP… <br /><br />
+                Oh wait, we did. 😎
+              </div>
+              <div class="comments" tabindex="0">View all comments</div>
+              <div class="post-timestamp">June 4</div>
+            </article>
+            <!-- More posts here -->
+          </section>
+          <section class="feed" aria-label="Post Feed">
+            <article
+              class="post"
+              aria-label="Post by royalchallengers.bengaluru"
+            >
+              <header class="post-header">
+                <img class="avatar" src="rcb_pfp.png" alt="RCB profile" />
+                <div class="username">royalchallengers.bengaluru</div>
+                <div
+                  class="more"
+                  tabindex="0"
+                  role="button"
+                  aria-label="More options"
+                >
+                  <i class="fas fa-ellipsis-h"></i>
+                </div>
+              </header>
+              <img class="post-image" src="rcb.png" alt="RCB wins IPL 2025" />
+              <div class="post-actions">
+                <div class="left-icons" role="group" aria-label="Post actions">
+                  <i class="far fa-heart"></i><span>2.2M</span>
+                  <i class="far fa-comment"></i><span>6,845</span>
+                  <i class="far fa-paper-plane"></i><span>78.5K</span>
+                </div>
+                <div
+                  class="bookmark"
+                  tabindex="0"
+                  role="button"
+                  aria-label="Save post"
+                >
+                  <i class="far fa-bookmark"></i>
+                </div>
+              </div>
+              <div class="likes" aria-live="polite">
+                Liked by virat.kohli and others
+              </div>
+              <div class="caption">
+                <strong>royalchallengers.bengaluru</strong> wHy iS rCb
+                cELebRaTiNg liKe tHey wOn tHe iP… <br /><br />
+                Oh wait, we did. 😎
+              </div>
+              <div class="comments" tabindex="0">View all comments</div>
+              <div class="post-timestamp">June 4</div>
+            </article>
+            <!-- More posts here -->
+          </section>
+          <section class="feed" aria-label="Post Feed">
+            <article
+              class="post"
+              aria-label="Post by royalchallengers.bengaluru"
+            >
+              <header class="post-header">
+                <img class="avatar" src="rcb_pfp.png" alt="RCB profile" />
+                <div class="username">royalchallengers.bengaluru</div>
+                <div
+                  class="more"
+                  tabindex="0"
+                  role="button"
+                  aria-label="More options"
+                >
+                  <i class="fas fa-ellipsis-h"></i>
+                </div>
+              </header>
+              <img class="post-image" src="rcb.png" alt="RCB wins IPL 2025" />
+              <div class="post-actions">
+                <div class="left-icons" role="group" aria-label="Post actions">
+                  <i class="far fa-heart"></i><span>2.2M</span>
+                  <i class="far fa-comment"></i><span>6,845</span>
+                  <i class="far fa-paper-plane"></i><span>78.5K</span>
+                </div>
+                <div
+                  class="bookmark"
+                  tabindex="0"
+                  role="button"
+                  aria-label="Save post"
+                >
+                  <i class="far fa-bookmark"></i>
+                </div>
+              </div>
+              <div class="likes" aria-live="polite">
+                Liked by virat.kohli and others
+              </div>
+              <div class="caption">
+                <strong>royalchallengers.bengaluru</strong> wHy iS rCb
+                cELebRaTiNg liKe tHey wOn tHe iP… <br /><br />
+                Oh wait, we did. 😎
+              </div>
+              <div class="comments" tabindex="0">View all comments</div>
+              <div class="post-timestamp">June 4</div>
+            </article>
+            <!-- More posts here -->
+          </section>
+          <section class="feed" aria-label="Post Feed">
+            <article
+              class="post"
+              aria-label="Post by royalchallengers.bengaluru"
+            >
+              <header class="post-header">
+                <img class="avatar" src="rcb_pfp.png" alt="RCB profile" />
+                <div class="username">royalchallengers.bengaluru</div>
+                <div
+                  class="more"
+                  tabindex="0"
+                  role="button"
+                  aria-label="More options"
+                >
+                  <i class="fas fa-ellipsis-h"></i>
+                </div>
+              </header>
+              <img class="post-image" src="rcb.png" alt="RCB wins IPL 2025" />
+              <div class="post-actions">
+                <div class="left-icons" role="group" aria-label="Post actions">
+                  <i class="far fa-heart"></i><span>2.2M</span>
+                  <i class="far fa-comment"></i><span>6,845</span>
+                  <i class="far fa-paper-plane"></i><span>78.5K</span>
+                </div>
+                <div
+                  class="bookmark"
+                  tabindex="0"
+                  role="button"
+                  aria-label="Save post"
+                >
+                  <i class="far fa-bookmark"></i>
+                </div>
+              </div>
+              <div class="likes" aria-live="polite">
+                Liked by virat.kohli and others
+              </div>
+              <div class="caption">
+                <strong>royalchallengers.bengaluru</strong> wHy iS rCb
+                cELebRaTiNg liKe tHey wOn tHe iP… <br /><br />
+                Oh wait, we did. 😎
+              </div>
+              <div class="comments" tabindex="0">View all comments</div>
+              <div class="post-timestamp">June 4</div>
+            </article>
+            <!-- More posts here -->
+          </section>
+          <section class="feed" aria-label="Post Feed">
+            <article
+              class="post"
+              aria-label="Post by royalchallengers.bengaluru"
+            >
+              <header class="post-header">
+                <img class="avatar" src="rcb_pfp.png" alt="RCB profile" />
+                <div class="username">royalchallengers.bengaluru</div>
+                <div
+                  class="more"
+                  tabindex="0"
+                  role="button"
+                  aria-label="More options"
+                >
+                  <i class="fas fa-ellipsis-h"></i>
+                </div>
+              </header>
+              <img class="post-image" src="rcb.png" alt="RCB wins IPL 2025" />
+              <div class="post-actions">
+                <div class="left-icons" role="group" aria-label="Post actions">
+                  <i class="far fa-heart"></i><span>2.2M</span>
+                  <i class="far fa-comment"></i><span>6,845</span>
+                  <i class="far fa-paper-plane"></i><span>78.5K</span>
+                </div>
+                <div
+                  class="bookmark"
+                  tabindex="0"
+                  role="button"
+                  aria-label="Save post"
+                >
+                  <i class="far fa-bookmark"></i>
+                </div>
+              </div>
+              <div class="likes" aria-live="polite">
+                Liked by virat.kohli and others
+              </div>
+              <div class="caption">
+                <strong>royalchallengers.bengaluru</strong> wHy iS rCb
+                cELebRaTiNg liKe tHey wOn tHe iP… <br /><br />
+                Oh wait, we did. 😎
+              </div>
+              <div class="comments" tabindex="0">View all comments</div>
+              <div class="post-timestamp">June 4</div>
+            </article>
+            <!-- More posts here -->
+          </section>
+        </main>
+      </main>
+
+      <!-- Right Sidebar -->
+      <aside class="sidebar-right" aria-label="User profile and suggestions">
+        <div>
+          <div class="profile-top">
+            <img src="arijith.png" alt="smrrr_18 profile" />
+            <div class="profile-info">
+              <div class="username" title="smrrr_18">smrrr_18</div>
+              <div class="fullname">سميرر</div>
+            </div>
+            <div
+              class="profile-switch"
+              tabindex="0"
+              role="button"
+              aria-label="Switch account"
+            >
+              Switch
+            </div>
+          </div>
+          <div class="suggestions-header">
+            <span>Suggested for you</span>
+            <a href="#" tabindex="0" aria-label="See all suggestions"
+              >See All</a
+            >
+          </div>
+          <div class="suggestion">
+            <div class="suggestion-left">
+              <img src="praneeth.png" alt="praneeth_sunchu" />
+              <div class="suggestion-info">
+                <div class="username">praneeth_sunchu</div>
+                <div class="reason">
+                  Followed by anvitaaa22, ashureddyy_ + 5 more
+                </div>
+              </div>
+            </div>
+            <button class="follow-btn" tabindex="0">Follow</button>
+          </div>
+          <div class="suggestion">
+            <div class="suggestion-left">
+              <img src="yuvateja.png" alt="yuvateja" />
+              <div class="suggestion-info">
+                <div class="username">mr.yuvateja</div>
+                <div class="reason">Followed by chintu_yadav_224</div>
+              </div>
+            </div>
+            <button class="follow-btn" tabindex="0">Follow</button>
+          </div>
+          <div class="suggestion">
+            <div class="suggestion-left">
+              <img src="muskan.png" alt="muskankaria" />
+              <div class="suggestion-info">
+                <div class="username">muskankaria</div>
+                <div class="reason">
+                  Followed by sidd._.06, shu_bruh_ + 4 more
+                </div>
+              </div>
+            </div>
+            <button class="follow-btn" tabindex="0">Follow</button>
+          </div>
+          <div class="suggestion">
+            <div class="suggestion-left">
+              <img src="sejal.png" alt="sejal_exx" />
+              <div class="suggestion-info">
+                <div class="username">sejal_exx</div>
+                <div class="reason">
+                  Followed by anjalinaroju, ka_lyan5416 + 13 more
+                </div>
+              </div>
+            </div>
+            <button class="follow-btn" tabindex="0">Follow</button>
+          </div>
+          <div class="suggestion">
+            <div class="suggestion-left">
+              <img src="artii.png" alt="aarthiiiii.rao" />
+              <div class="suggestion-info">
+                <div class="username">aarthiiiii.rao</div>
+                <div class="reason">
+                  Followed by varshinipenchala, ashishpaulnittu + 7 more
+                </div>
+              </div>
+            </div>
+            <button class="follow-btn" tabindex="0">Follow</button>
+          </div>
+        </div>
+        <footer class="footer" role="contentinfo">
+          <nav>
+            <a href="#">About</a>·<a href="#">Help</a>·<a href="#">Press</a>·<a
+              href="#"
+              >API</a
+            >· <a href="#">Jobs</a>·<a href="#">Privacy</a>·<a href="#">Terms</a
+            >· <a href="#">Locations</a>·<a href="#">Language</a>·<a href="#"
+              >Meta Verified</a
+            >
+          </nav>
+          © 2025 INSTAGRAM FROM META
+        </footer>
+      </aside>
+    </div>
+  </body>
+</html>
